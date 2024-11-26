@@ -1,0 +1,17 @@
+{
+    "name": "adam-ainsworth/hanoi-challenge",
+    "description": "A simple Tower Of Hanoi API",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "AdamAinsworth\\HanoiChallenge\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Adam Ainsworth",
+            "email": "adam.ainsworth@gmail.com"
+        }
+    ],
+    "require": {}
+}
