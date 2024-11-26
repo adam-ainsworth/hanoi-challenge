@@ -7,8 +7,24 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $app = AppFactory::create();
 
-$app->get('/', function (Request $request, Response $response, $args) {
-    $response->getBody()->write("Hello world!");
+$app->redirect('/', '/state', 301);
+
+$app->get('/state', function (Request $request, Response $response, $args) {
+    $response->getBody()->write("State");
+
+    return $response;
+});
+
+$app->get('/move/{from}/{to}', function (Request $request, Response $response, $args) {
+    if( isset($args['from']) && isset($args['to']) ) {
+        $from = intval($args['from']);
+        $to = intval($args['to']);
+
+        if( is_int($from) && is_int($to) ) {
+            $response->getBody()->write("Move from " . $from . " to " . $to);
+        }
+    }
+
     return $response;
 });
 
