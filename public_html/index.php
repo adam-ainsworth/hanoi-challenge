@@ -1,4 +1,6 @@
 <?php
+
+use AdamAinsworth\HanoiChallenge\Hanoi;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
@@ -10,7 +12,10 @@ $app = AppFactory::create();
 $app->redirect('/', '/state', 301);
 
 $app->get('/state', function (Request $request, Response $response, $args) {
-    $response->getBody()->write("State");
+    $hanoi = Hanoi::load();
+
+    header('Content-Type: application/json');
+    $response->getBody()->write( $hanoi->serialise() );
 
     return $response;
 });
