@@ -1,5 +1,5 @@
 $(function() {
-    $('#reset').on('click', function(e) {
+    $('.button--reset,.button--restart').on('click', function(e) {
         e.preventDefault();
 
         $.ajax({
@@ -8,8 +8,14 @@ $(function() {
         }).done( update );
     });
 
-    $('#auto').on('click', function(e) {
+    $('.button--auto').on('click', function(e) {
         e.preventDefault();
+
+        if( $(e.target).hasClass('disabled') ) {
+            return;
+        }
+
+        alert('Auto moves are a TODO :-)');
 
         $.ajax({
             url: 'http://localhost/auto',
@@ -44,38 +50,48 @@ $(function() {
                     $hanoi.append($peg);
                 }
 
-                $('.peg-button').on('click', function(e) {
-                    e.preventDefault();
-            
-                    const $button = $(e.target), index = $button.data('index'), $hanoi = $button.closest('#hanoi'), from = $hanoi.data('from');
+                if( data.completed ) {
+                    alert('CONGRATULATIONS!');
 
-                    if( $button.hasClass('disabled') ) {
-                        return;
-                    }
-            
-                    if( typeof from === 'undefined' ) {
-                        // this is a From click
-                        $('.peg-button').text('To');
-                        $button.text('From').addClass('disabled');
-                        $hanoi.data('from', index);
-                    } else {
-                        // this is a To click
-                        $('.peg-button').addClass('disabled');
-                        $hanoi.removeData('from');
+                    $('body').addClass('completed');
+                    $('.peg-button,#auto').addClass('disabled');
+                } else {
+                    $('body').removeClass('completed');
+                    $('#auto').removeClass('disabled');
 
-                        $.ajax({
-                            url: 'http://localhost/move/' + from + '/' + index,
-                            context: document.body
-                        }).done( function(data) {
-                            if( data.code === 0 ) {
-                                update();
-                            } else {
-                                alert(data.message);
-                                update();
-                            }
-                        } );
-                    }
-                });                
+                    $('.peg-button').on('click', function(e) {
+                        e.preventDefault();
+                
+                        const $button = $(e.target), index = $button.data('index'), $hanoi = $button.closest('#hanoi'), from = $hanoi.data('from');
+
+                        if( $button.hasClass('disabled') ) {
+                            return;
+                        }
+                
+                        if( typeof from === 'undefined' ) {
+                            // this is a From click
+                            $('.peg-button').text('To');
+                            $button.text('From').addClass('disabled');
+                            $hanoi.data('from', index);
+                        } else {
+                            // this is a To click
+                            $('.peg-button').addClass('disabled');
+                            $hanoi.removeData('from');
+
+                            $.ajax({
+                                url: 'http://localhost/move/' + from + '/' + index,
+                                context: document.body
+                            }).done( function(data) {
+                                if( data.code === 0 ) {
+                                    update();
+                                } else {
+                                    alert(data.message);
+                                    update();
+                                }
+                            } );
+                        }
+                    });
+                }                
             }
         });
     }

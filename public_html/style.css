@@ -6,6 +6,7 @@ body {
     font-family: sans-serif;
     background-color: var(--bgd);
     color: var(--fgd);
+    transition: background-color 2.0s, color 2.0s;
     text-align: center;
 
     .container {
@@ -50,6 +51,10 @@ body {
             opacity: 0.6;
         }
 
+        a.button--restart {
+            display: none;
+        }
+
         #hanoi {
             display: flex;
             flex-direction: row;
@@ -75,6 +80,26 @@ body {
                     }
                 }
             }
+        }
+    }
+}
+
+body.completed {
+    background-color: var(--fgd);
+    color: var(--bgd);
+
+    .container {
+        a.button {
+            background-color: var(--bgd);
+            color: var(--fgd);
+        }
+
+        a.button--auto, a.button--reset {
+            display: none;
+        }
+
+        a.button--restart {
+            display: inline-block;
         }
     }
 }

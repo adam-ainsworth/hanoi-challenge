@@ -10,7 +10,7 @@ use Slim\Factory\AppFactory;
 // TODO - put these in env vars
 define('STATE_JSON', '/tmp/state.json');
 define('NUMBER_PEGS', 3);
-define('NUMBER_DISKS', 7);
+define('NUMBER_DISKS', 2);
 
 require __DIR__ . '/../vendor/autoload.php';
 

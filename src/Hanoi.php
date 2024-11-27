@@ -58,6 +58,11 @@ class Hanoi {
     }
 
     public function move(int $from, int $to) : int {
+        // game is already completed
+        if( $this->completed === true ) {
+            return -4;
+        }
+
         // check they are valid pegs
         if( $from < 0 || $from >= NUMBER_PEGS || $to < 0 || $to >= NUMBER_PEGS ) {
             return -1;
@@ -80,7 +85,9 @@ class Hanoi {
         $disk_to_move = $from_peg->pop_disk();
         $to_peg->add_disk($disk_to_move);
 
-        // TODO check if completed
+        if( $to > 0 && $to_peg->disk_count() === NUMBER_DISKS ) {
+            $this->completed = true;
+        }
 
         $this->save();
 

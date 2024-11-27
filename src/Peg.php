@@ -34,7 +34,7 @@ class Peg {
 
     public function top_size() : int {
         if( $this->disk_count() === 0 ) {
-            return 255;
+            return NUMBER_DISKS;
         }
 
         return $this->disks[0]->size();
