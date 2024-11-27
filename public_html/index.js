@@ -3,7 +3,7 @@ $(function() {
         e.preventDefault();
 
         $.ajax({
-            url: 'http://localhost/reset',
+            url: '/reset',
             context: document.body
         }).done( update );
     });
@@ -18,14 +18,14 @@ $(function() {
         alert('Auto moves are a TODO :-)');
 
         $.ajax({
-            url: 'http://localhost/auto',
+            url: '/auto',
             context: document.body
         }).done( update );
     });
 
     function update() {
         $.ajax({
-            url: 'http://localhost/state',
+            url: '/state',
             context: document.body
         }).done( function(data) {
             const $hanoi = $('#hanoi');
@@ -79,7 +79,7 @@ $(function() {
                             $hanoi.removeData('from');
 
                             $.ajax({
-                                url: 'http://localhost/move/' + from + '/' + index,
+                                url: '/move/' + from + '/' + index,
                                 context: document.body
                             }).done( function(data) {
                                 if( data.code === 0 ) {

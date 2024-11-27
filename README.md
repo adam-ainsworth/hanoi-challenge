@@ -6,6 +6,8 @@ An implementation of [Tower Of Hanoi](https://en.wikipedia.org/wiki/Tower_of_Han
 
 Run ```composer install``` to install dependencies. Then ```docker compose up``` to start the server.
 
+The game will now be at [localhost](http://localhost/).
+
 If you wish to change the number of disks, pegs or the location of the state storage file, add a file named ```.env``` in the project root and restart docker;
 
 ```

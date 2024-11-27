@@ -9,9 +9,9 @@ use Slim\Factory\AppFactory;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-define('STATE_JSON', null !== getenv('STATE_JSON') ? getenv('STATE_JSON') : '/tmp/state.json');
-define('NUMBER_PEGS', null !== getenv('NUMBER_PEGS') ? intval(getenv('NUMBER_PEGS')) : 3);
-define('NUMBER_DISKS', null !== getenv('NUMBER_DISKS') ? intval(getenv('NUMBER_DISKS')) : 7);
+define('STATE_JSON', false !== getenv('STATE_JSON') ? getenv('STATE_JSON') : '/tmp/state.json');
+define('NUMBER_PEGS', false !== getenv('NUMBER_PEGS') ? intval(getenv('NUMBER_PEGS')) : 3);
+define('NUMBER_DISKS', false !== getenv('NUMBER_DISKS') ? intval(getenv('NUMBER_DISKS')) : 7);
 
 $app = AppFactory::create();
 
