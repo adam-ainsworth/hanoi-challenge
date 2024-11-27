@@ -14,11 +14,7 @@
         }
     ],
     "require": {
-        "marcosh/lamphpda": "^3.1",
         "slim/slim": "4.*",
         "slim/psr7": "^1.7"
-    },
-    "require-dev": {
-        "vimeo/psalm": "^5.26"
     }
 }
