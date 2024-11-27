@@ -16,7 +16,16 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $app = AppFactory::create();
 
-$app->redirect('/', '/state', 301);
+$app->redirect('/', '/frontend.html', 301);
+
+$app->get('/reset', function (Request $request, Response $response, $args) {
+    $hanoi = new Hanoi();
+
+    header('Content-Type: application/json');
+    $response->getBody()->write( $hanoi->return_state() );
+
+    return $response;
+});
 
 $app->get('/state', function (Request $request, Response $response, $args) {
     $hanoi = Hanoi::create();
