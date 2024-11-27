@@ -6,8 +6,11 @@ namespace AdamAinsworth\HanoiChallenge;
 
 class Hanoi {
     private $pegs;
+    private $completed;
 
     public function __construct() {
+        $this->completed = false;
+
         for($i = 0; $i < NUMBER_PEGS; $i++) {
             $this->pegs[] = new Peg($i + 1, ($i === 0 ? NUMBER_DISKS : 0) );
         }
@@ -17,12 +20,14 @@ class Hanoi {
 
     public function __serialize() {
         return [
-            'pegs' => $this->pegs,
+            'pegs'      => $this->pegs,
+            'completed' => $this->completed,
         ];
     }
 
     public function __unserialize($data) {
         $this->pegs = $data['pegs'];
+        $this->completed = $data['completed'];
     }
 
     public static function create() {
@@ -75,6 +80,8 @@ class Hanoi {
             return false;
         }
 
+        // TODO check if completed
+
         // seems fine, let's do the move
         $to_peg->add_disk($disk_to_move);
         $this->save();
@@ -82,8 +89,13 @@ class Hanoi {
         return true;
     }
 
+    public function auto() : bool {
+        return true;
+    }
+
     public function return_state() : string {
         return json_encode([
+            'completed' => $this->completed,
             'pegs' => array_map( function(Peg $peg) {
                 return $peg->return_state();
             }, $this->pegs)

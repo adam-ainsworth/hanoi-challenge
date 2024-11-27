@@ -22,7 +22,24 @@ $app->get('/reset', function (Request $request, Response $response, $args) {
     $hanoi = new Hanoi();
 
     header('Content-Type: application/json');
-    $response->getBody()->write( $hanoi->return_state() );
+    $response->getBody()->write( json_encode([
+        'code' => 0,
+        'message' => 'Hanoi Reset',
+    ]) );
+
+    return $response;
+});
+
+$app->get('/auto', function (Request $request, Response $response, $args) {
+    $hanoi = Hanoi::create();
+
+    $hanoi->auto();
+
+    header('Content-Type: application/json');
+    $response->getBody()->write( json_encode([
+        'code' => 0,
+        'message' => 'Hanoi Auto Move',
+    ]) );
 
     return $response;
 });
