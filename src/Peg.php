@@ -6,21 +6,33 @@ class Peg {
     private int $index;
     private $disks = [];
 
-    public function __construct(Int $index, bool $add_disks)  {
+    public function __construct(int $index, int $number_disks)  {
         $this->index = $index;
 
-        if( $add_disks ) {
-            for($i = 0; $i < 7; $i++) {
-                $this->disks[] = new Disk($i + 1);
-            }
+        for($i = 0; $i < $number_disks; $i++) {
+            $this->disks[] = new Disk($i);
         }
     }
 
-    public function serialise() : Array {
+    public function __serialize() {
+        return [
+            'index' => $this->index,
+            'disks' => $this->disks,
+        ];
+    }
+
+    public function __unserialize($data) {
+        list(
+            $this->index,
+            $this->disks,
+        ) = unserialize($data);
+    }
+
+    public function return_state() : Array {
         return [
             'index' => $this->index,
             'disks' => array_map( function(Disk $disk) {
-                return $disk->serialise();
+                return $disk->return_state();
             }, $this->disks),
         ];
     }

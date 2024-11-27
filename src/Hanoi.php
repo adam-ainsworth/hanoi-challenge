@@ -6,35 +6,56 @@ class Hanoi {
     private $pegs;
 
     public function __construct() {
-        for($i = 0; $i < 3; $i++) {
-            $this->pegs[] = new Peg($i + 1, ($i === 0) );
+        for($i = 0; $i < NUMBER_PEGS; $i++) {
+            $this->pegs[] = new Peg($i + 1, ($i === 0 ? NUMBER_DISKS : 0) );
         }
+
+        $this->save();
     }
 
-    public static function load() : Hanoi {
-        if( file_exists('./state.json') ) {
-            $input = readfile('./state.json');
+    public function __serialize() {
+        return [
+            'pegs' => $this->pegs,
+        ];
+    }
 
-            $hanoi = json_decode($input);
-        } else {
-            $hanoi = new Hanoi();
+    public function __unserialize($data) {
+        list(
+            $this->pegs,
+        ) = unserialize($data);
+    }
 
-            $hanoi->save();
-
-            return $hanoi;
+    public static function create() {
+        if( file_exists(STATE_JSON) ) {
+            $data = readfile(STATE_JSON);
+            $hanoi = unserialize($data);
+        
+            if( isset($hanoi->pegs) && (count($hanoi->pegs) === NUMBER_PEGS) ) {
+                $disk_count = 0;
+        
+                foreach($hanoi->pegs as $peg) {
+                    $disk_count += $peg->disk_count();
+                }
+        
+                if( $disk_count === NUMBER_DISKS ) {
+                    return $hanoi;
+                }
+            }
         }
+
+        return new Hanoi();
     }
 
     public function save() : void {
-        $output = $this->serialise();
+        $output = serialize($this);
 
-        // file_put_contents('./state.json', $output);
+        file_put_contents(STATE_JSON, $output);
     }
 
-    public function serialise() : String {
+    public function return_state() : string {
         return json_encode([
             'pegs' => array_map( function(Peg $peg) {
-                return $peg->serialise();
+                return $peg->return_state();
             }, $this->pegs)
         ]);
     }
