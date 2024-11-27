@@ -12,7 +12,7 @@ class Hanoi {
         $this->completed = false;
 
         for($i = 0; $i < NUMBER_PEGS; $i++) {
-            $this->pegs[] = new Peg($i + 1, ($i === 0 ? NUMBER_DISKS : 0) );
+            $this->pegs[] = new Peg($i, ($i === 0 ? NUMBER_DISKS : 0) );
         }
 
         $this->save();
@@ -57,36 +57,34 @@ class Hanoi {
         file_put_contents(STATE_JSON, $output);
     }
 
-    public function move(int $from, int $to) : bool {
+    public function move(int $from, int $to) : int {
         // check they are valid pegs
-        if( $from < 1 || $from > NUMBER_PEGS || $to < 1 || $to > NUMBER_PEGS ) {
-            return false;
+        if( $from < 0 || $from >= NUMBER_PEGS || $to < 0 || $to >= NUMBER_PEGS ) {
+            return -1;
         }
 
-        // reduce the indexes as the front end is as 1-indexed
-        $from_peg = $this->pegs[--$from];
-        $to_peg = $this->pegs[--$to];
+        $from_peg = $this->pegs[$from];
+        $to_peg = $this->pegs[$to];
 
         // check we have a disk to move from
         if( $from_peg->disk_count() === 0 ) {
-            return false;
+            return -2;
         }
 
-        $disk_to_move = $from_peg->top_disk();
-        // check we have a disk to move from
-        if( $to_peg->disk_count() > 0 && $to_peg->top_disk()->size() > $disk_to_move->size() ) {
-            $from_peg->add_disk($disk_to_move);
-
-            return false;
+        // check it's a valid move
+        if( $from_peg->top_size() > $to_peg->top_size() ) {
+            return -3;
         }
+
+        // seems fine, let's do the move
+        $disk_to_move = $from_peg->pop_disk();
+        $to_peg->add_disk($disk_to_move);
 
         // TODO check if completed
 
-        // seems fine, let's do the move
-        $to_peg->add_disk($disk_to_move);
         $this->save();
 
-        return true;
+        return 0;
     }
 
     public function auto() : bool {

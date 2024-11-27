@@ -63,7 +63,10 @@ body {
                 margin: 15px;
 
                 .disks {
-                    margin-bottom: 40px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: end;
+                    height: 160px;
 
                     .disk {
                         height: 20px;

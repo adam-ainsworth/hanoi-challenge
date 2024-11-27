@@ -12,7 +12,7 @@ class Peg {
         $this->index = $index;
 
         for($i = 0; $i < $number_disks; $i++) {
-            $this->disks[] = new Disk($i + 1);
+            $this->disks[] = new Disk($i);
         }
     }
 
@@ -32,10 +32,17 @@ class Peg {
         return count($this->disks);
     }
 
-    public function top_disk() : Disk {
+    public function top_size() : int {
+        if( $this->disk_count() === 0 ) {
+            return 255;
+        }
+
+        return $this->disks[0]->size();
+    }
+
+    public function pop_disk() : Disk {
         if( $this->disk_count() > 0 ) {
-            $top_disk = $this->disks[0];
-            unset($this->disks[0]);
+            $top_disk = array_shift($this->disks);
 
             return $top_disk;
         }

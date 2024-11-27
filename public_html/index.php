@@ -57,23 +57,42 @@ $app->get('/move/{from}/{to}', function (Request $request, Response $response, $
     $from = intval( isset($args['from']) ? $args['from'] : '0' );
     $to = intval( isset($args['to']) ? $args['to'] : '0' );
 
-    if( is_int($from) && ($from > 0) && is_int($to) && ($to > 0) ) {
+    if( is_int($from) && ($from >= 0) && is_int($to) && ($to >= 0) ) {
         $hanoi = Hanoi::create();
+        $return_code = $hanoi->move($from ,$to);
 
-        if( $hanoi->move($from ,$to) ) {
-            $response->getBody()->write( json_encode([
-                'code' => 0,
-                'message' => 'Hanoi Updated',
-            ]) );
-        } else {
-            $response->getBody()->write( json_encode([
-                'code' => -2,
-                'message' => 'Invalid Move',
-            ]) );
+        switch( $return_code ) {
+            case 0:
+                $response->getBody()->write( json_encode([
+                    'code' => $return_code,
+                    'message' => 'Hanoi Updated',
+                ]) );
+                break;
+    
+            case -1:
+                $response->getBody()->write( json_encode([
+                    'code' => $return_code,
+                    'message' => 'Invalid Peg',
+                ]) );
+                break;
+    
+            case -2:
+                $response->getBody()->write( json_encode([
+                    'code' => $return_code,
+                    'message' => 'No Disks On Peg',
+                ]) );
+                break;
+
+            case -3:
+                $response->getBody()->write( json_encode([
+                    'code' => $return_code,
+                    'message' => 'Invalid Move',
+                ]) );
+                break;
         }
     } else {
         $response->getBody()->write( json_encode([
-            'code' => -1,
+            'code' => -255,
             'message' => 'Invalid Request',
         ]) );
     }
