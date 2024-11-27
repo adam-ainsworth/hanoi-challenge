@@ -26,15 +26,21 @@ $app->get('/state', function (Request $request, Response $response, $args) {
 });
 
 $app->get('/move/{from}/{to}', function (Request $request, Response $response, $args) {
-    if( isset($args['from']) && isset($args['to']) ) {
-        $from = intval($args['from']);
-        $to = intval($args['to']);
+    $from = intval( isset($args['from']) ? $args['from'] : '0' );
+    $to = intval( isset($args['to']) ? $args['to'] : '0' );
 
-        if( is_int($from) && is_int($to) ) {
-            $response->getBody()->write("Move from " . $from . " to " . $to);
-        }
+    if( is_int($from) && ($from > 0) && is_int($to) && ($to > 0) ) {
+        $hanoi = Hanoi::create();
+
+        $response->getBody()->write("Move from " . $from . " to " . $to);
+    } else {
+        $response->getBody()->write( json_encode([
+            'code' => -1,
+            'message' => 'Invalid Request',
+        ]) );
     }
 
+    header('Content-Type: application/json');
     return $response;
 });
 

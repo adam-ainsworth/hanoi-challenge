@@ -10,7 +10,7 @@ class Peg {
         $this->index = $index;
 
         for($i = 0; $i < $number_disks; $i++) {
-            $this->disks[] = new Disk($i);
+            $this->disks[] = new Disk($i + 1);
         }
     }
 
@@ -22,10 +22,12 @@ class Peg {
     }
 
     public function __unserialize($data) {
-        list(
-            $this->index,
-            $this->disks,
-        ) = unserialize($data);
+        $this->index = $data['index'];
+        $this->disks = $data['disks'];
+    }
+
+    public function disk_count() {
+        return count($this->disks);
     }
 
     public function return_state() : Array {

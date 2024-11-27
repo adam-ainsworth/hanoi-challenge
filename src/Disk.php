@@ -22,11 +22,9 @@ class Disk {
     }
 
     public function __unserialize($data) {
-        list(
-            $this->size,
-            $this->name,
-            $this->colour,
-        ) = unserialize($data);
+        $this->size = $data['size'];
+        $this->name = $data['name'];
+        $this->colour = $data['colour'];
     }
 
     public function return_state() : String {

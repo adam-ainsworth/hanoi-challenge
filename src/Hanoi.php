@@ -20,14 +20,12 @@ class Hanoi {
     }
 
     public function __unserialize($data) {
-        list(
-            $this->pegs,
-        ) = unserialize($data);
+        $this->pegs = $data['pegs'];
     }
 
     public static function create() {
         if( file_exists(STATE_JSON) ) {
-            $data = readfile(STATE_JSON);
+            $data = base64_decode(file_get_contents(STATE_JSON));
             $hanoi = unserialize($data);
         
             if( isset($hanoi->pegs) && (count($hanoi->pegs) === NUMBER_PEGS) ) {
@@ -47,7 +45,7 @@ class Hanoi {
     }
 
     public function save() : void {
-        $output = serialize($this);
+        $output = base64_encode(serialize($this));
 
         file_put_contents(STATE_JSON, $output);
     }
