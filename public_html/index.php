@@ -7,12 +7,11 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
 
-// TODO - put these in env vars
-define('STATE_JSON', '/tmp/state.json');
-define('NUMBER_PEGS', 3);
-define('NUMBER_DISKS', 2);
-
 require __DIR__ . '/../vendor/autoload.php';
+
+define('STATE_JSON', null !== getenv('STATE_JSON') ? getenv('STATE_JSON') : '/tmp/state.json');
+define('NUMBER_PEGS', null !== getenv('NUMBER_PEGS') ? intval(getenv('NUMBER_PEGS')) : 3);
+define('NUMBER_DISKS', null !== getenv('NUMBER_DISKS') ? intval(getenv('NUMBER_DISKS')) : 7);
 
 $app = AppFactory::create();
 

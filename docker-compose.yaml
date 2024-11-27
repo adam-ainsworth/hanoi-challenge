@@ -15,3 +15,5 @@ services:
       dockerfile: Dockerfile
     volumes:
      - ./:/var/www/html
+    env_file:
+      - ./.env
