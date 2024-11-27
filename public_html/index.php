@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use AdamAinsworth\HanoiChallenge\Hanoi;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -32,7 +34,17 @@ $app->get('/move/{from}/{to}', function (Request $request, Response $response, $
     if( is_int($from) && ($from > 0) && is_int($to) && ($to > 0) ) {
         $hanoi = Hanoi::create();
 
-        $response->getBody()->write("Move from " . $from . " to " . $to);
+        if( $hanoi->move($from ,$to) ) {
+            $response->getBody()->write( json_encode([
+                'code' => 0,
+                'message' => 'Hanoi Updated',
+            ]) );
+        } else {
+            $response->getBody()->write( json_encode([
+                'code' => -2,
+                'message' => 'Invalid Move',
+            ]) );
+        }
     } else {
         $response->getBody()->write( json_encode([
             'code' => -1,

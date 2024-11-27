@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AdamAinsworth\HanoiChallenge;
 
 class Peg {
@@ -26,11 +28,26 @@ class Peg {
         $this->disks = $data['disks'];
     }
 
-    public function disk_count() {
+    public function disk_count() : int {
         return count($this->disks);
     }
 
-    public function return_state() : Array {
+    public function top_disk() : Disk {
+        if( $this->disk_count() > 0 ) {
+            $top_disk = $this->disks[0];
+            unset($this->disks[0]);
+
+            return $top_disk;
+        }
+
+        return null;
+    }
+
+    public function add_disk(Disk $disk) : void {
+        array_unshift($this->disks, $disk);
+    }
+
+    public function return_state() : array {
         return [
             'index' => $this->index,
             'disks' => array_map( function(Disk $disk) {

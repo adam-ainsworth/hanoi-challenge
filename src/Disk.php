@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AdamAinsworth\HanoiChallenge;
 
 class Disk {
@@ -27,7 +29,11 @@ class Disk {
         $this->colour = $data['colour'];
     }
 
-    public function return_state() : String {
+    public function size() : int {
+        return $this->size;
+    }
+
+    public function return_state() : string {
         return json_encode( [
             'size' => $this->size,
             'name' => $this->name,

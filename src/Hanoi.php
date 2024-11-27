@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AdamAinsworth\HanoiChallenge;
 
 class Hanoi {
@@ -48,6 +50,36 @@ class Hanoi {
         $output = base64_encode(serialize($this));
 
         file_put_contents(STATE_JSON, $output);
+    }
+
+    public function move(int $from, int $to) : bool {
+        // check they are valid pegs
+        if( $from < 1 || $from > NUMBER_PEGS || $to < 1 || $to > NUMBER_PEGS ) {
+            return false;
+        }
+
+        // reduce the indexes as the front end is as 1-indexed
+        $from_peg = $this->pegs[--$from];
+        $to_peg = $this->pegs[--$to];
+
+        // check we have a disk to move from
+        if( $from_peg->disk_count() === 0 ) {
+            return false;
+        }
+
+        $disk_to_move = $from_peg->top_disk();
+        // check we have a disk to move from
+        if( $to_peg->disk_count() > 0 && $to_peg->top_disk()->size() > $disk_to_move->size() ) {
+            $from_peg->add_disk($disk_to_move);
+
+            return false;
+        }
+
+        // seems fine, let's do the move
+        $to_peg->add_disk($disk_to_move);
+        $this->save();
+
+        return true;
     }
 
     public function return_state() : string {
