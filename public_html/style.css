@@ -29,8 +29,10 @@ body {
         }
 
         a.button {
+            display: inline-block;
+            width: 100px;
             margin: 15px;
-            padding: 15px;
+            padding: 15px 0;
             border: none;
             background-color: var(--fgd);
             color: var(--bgd);
@@ -39,7 +41,12 @@ body {
             transition: opacity 0.5s;
         }
 
-        a.button:hover {
+        a.button.disabled {
+            opacity: 0.1;
+            cursor: default;
+        }
+
+        a.button:not(.disabled):hover {
             opacity: 0.6;
         }
 

@@ -47,9 +47,34 @@ $(function() {
                 $('.peg-button').on('click', function(e) {
                     e.preventDefault();
             
-                    const $button = $(e.target);
+                    const $button = $(e.target), index = $button.data('index'), $hanoi = $button.closest('#hanoi'), from = $hanoi.data('from');
+
+                    if( $button.hasClass('disabled') ) {
+                        return;
+                    }
             
-                    console.log( $button.data('index') );
+                    if( typeof from === 'undefined' ) {
+                        // this is a From click
+                        $('.peg-button').text('To');
+                        $button.text('From').addClass('disabled');
+                        $hanoi.data('from', index);
+                    } else {
+                        // this is a To click
+                        $('.peg-button').addClass('disabled');
+                        $hanoi.removeData('from');
+
+                        $.ajax({
+                            url: 'http://localhost/move/' + from + '/' + index,
+                            context: document.body
+                        }).done( function(data) {
+                            if( data.code === 0 ) {
+                                update();
+                            } else {
+                                alert(data.message);
+                                update();
+                            }
+                        } );
+                    }
                 });                
             }
         });
