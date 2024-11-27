@@ -12,9 +12,10 @@ $(function() {
                 const $peg = $('<div class="peg"></div>');
                 const $disks = $('<div class="disks"></div>');
 
-                // console.log(peg);
                 for( disk of peg.disks ) {
-                    console.log(disk);
+                    const $disk = $('<div class="disk" style="width: ' + ( 20 + disk.size * 10) + '%; background-color: ' + disk.colour + ';">' + disk.name + '</div>')
+
+                    $disks.append($disk);
                 }
 
                 $peg.append($disks);

@@ -33,11 +33,11 @@ class Disk {
         return $this->size;
     }
 
-    public function return_state() : string {
-        return json_encode( [
+    public function return_state() : array {
+        return [
             'size' => $this->size,
             'name' => $this->name,
             'colour' => $this->colour,
-        ] );
+        ];
     }
 }
