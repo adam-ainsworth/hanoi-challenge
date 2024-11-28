@@ -78,13 +78,6 @@ $app->get('/move/{from}/{to}', function (Request $request, Response $response, $
             case -2:
                 $response->getBody()->write( json_encode([
                     'code' => $return_code,
-                    'message' => 'No Disks On Peg',
-                ]) );
-                break;
-
-            case -3:
-                $response->getBody()->write( json_encode([
-                    'code' => $return_code,
                     'message' => 'Invalid Move',
                 ]) );
                 break;

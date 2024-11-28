@@ -32,6 +32,10 @@ class Peg {
         return count($this->disks);
     }
 
+    public function get_index() : int {
+        return $this->index;
+    }
+
     public function top_size() : int {
         if( $this->disk_count() === 0 ) {
             return NUMBER_DISKS;

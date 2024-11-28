@@ -15,8 +15,6 @@ $(function() {
             return;
         }
 
-        alert('Auto moves are a TODO :-)');
-
         $.ajax({
             url: '/auto',
             context: document.body

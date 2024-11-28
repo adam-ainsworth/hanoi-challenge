@@ -16,9 +16,11 @@ To move a disk from one peg to another, click **From** under the peg to move it 
 
 There will be a small celebration if you complete the game.
 
-## Notes
+To reset the game to the initial condition, click **Reset**. You should do this after changing the number of pegs or disks, although it should sort itself out.
 
-There is an algorithm for completing the game in the shortest number of moves - I'll implement it when I have time. Also, if I'd had more time, I would have used value objects instead of lazily passing around primitive types. Building Composer within Docker would also have been desirable.
+There is an algorithm for completing the game in the shortest number of moves, and if you don't fancy working it out you can click the auto button to run through this, although it's not quite right if you have made some moves already (weird bug!).
+
+## Notes
 
 I'd never used PHP ```serialize``` functionality before, so it was nice to learn that. For some reason, I needed to Base64 encode it in the file.
 
