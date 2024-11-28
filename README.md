@@ -4,17 +4,11 @@ An implementation of [Tower Of Hanoi](https://en.wikipedia.org/wiki/Tower_of_Han
 
 ## Running
 
-Run ```composer install``` to install dependencies. Then ```docker compose up``` to start the server.
+Run ```composer install``` to install dependencies. Add a .env file based on [.env.example](./.env.example) and then ```docker compose up``` to start the server.
 
 The game will now be at [localhost](http://localhost/).
 
-If you wish to change the number of disks, pegs or the location of the state storage file, add a file named ```.env``` in the project root and restart docker;
-
-```
-STATE_JSON='/tmp/state.json'
-NUMBER_PEGS=3
-NUMBER_DISKS=5
-```
+If you wish to change the number of disks, pegs or the location of the state storage file, change ```.env``` accordingly. It is possible to run with only one peg but you won't get very far, as is the case with more disks than pegs!
 
 ## Playing
 
