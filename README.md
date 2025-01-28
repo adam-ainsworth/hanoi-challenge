@@ -8,7 +8,7 @@ Run ```composer install``` to install dependencies. Add a .env file based on [.e
 
 The game will now be at [localhost](http://localhost/).
 
-If you wish to change the number of disks, pegs or the location of the state storage file, change ```.env``` accordingly. It is possible to run with only one peg but you won't get very far, as is the case with more disks than pegs!
+If you wish to change the number of disks, pegs or the location of the state storage file, change ```.env``` accordingly. It is possible to run with only one or two pegs but you won't get very far.
 
 ## Playing
 
